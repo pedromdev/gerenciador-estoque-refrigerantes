@@ -1,15 +1,21 @@
 #!/usr/bin/env bash
 
-if [[ ! -d "/var/www/html/vendor" ]]; then
+APP_DIR="/var/www/html"
+
+if [[ ! -d "$APP_DIR/vendor" ]]; then
     composer install
 fi
 
-if [[ ! -d "/var/www/html/node_modules" ]]; then
+if [[ ! -d "$APP_DIR/node_modules" ]]; then
     npm install
 fi
 
-if [[ ! -f "/var/www/html/.env" ]]; then
-    cp /var/www/html/.env.example /var/www/html/.env
+if [[ ! -f "$APP_DIR/.env" ]]; then
+    cp "$APP_DIR/.env.example" "$APP_DIR/.env"
+fi
+
+if [[ "$(stat -c "%U" "$APP_DIR/storage")" != "www-data" ]]; then
+    chown www-data: -R "$APP_DIR/storage"
 fi
 
 docker-php-entrypoint "$@"
