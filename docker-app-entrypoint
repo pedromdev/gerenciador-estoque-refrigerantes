@@ -8,8 +8,9 @@ if [[ ! -d "/var/www/html/node_modules" ]]; then
     npm install
 fi
 
+if [[ ! -f "/var/www/html/.env" ]]; then
+    cp /var/www/html/.env.example /var/www/html/.env
+fi
+
 docker-php-entrypoint "$@"
 
-echo "$@"
-
-#exec "$@"
