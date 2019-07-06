@@ -3,20 +3,26 @@
 APP_DIR="/var/www/html"
 
 if [[ ! -d "$APP_DIR/vendor" ]]; then
-    composer install
+    echo "Instalando dependências pelo Composer..."
+    composer install > /dev/null
 fi
 
 if [[ ! -d "$APP_DIR/node_modules" ]]; then
-    npm install
+    echo "Instalando dependências pelo NPM..."
+    npm install > /dev/null
+    echo "Gerando build dos assets..."
+    npm run prod > /dev/null
 fi
 
 if [[ ! -f "$APP_DIR/.env" ]]; then
+    echo "Criando arquivo .env..."
     cp "$APP_DIR/.env.example" "$APP_DIR/.env"
 fi
 
 if [[ "$(stat -c "%U" "$APP_DIR/storage")" != "www-data" ]]; then
+    echo "Alterando proprietário da pasta storage para www-data..."
     chown www-data: -R "$APP_DIR/storage"
 fi
 
-docker-php-entrypoint "$@"
+docker-php-entrypoint $@
 
