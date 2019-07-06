@@ -2,24 +2,31 @@
 
 namespace App;
 
-use Jenssegers\Mongodb\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Refrigerante extends Model
 {
-    protected $collection = 'refrigerantes';
+
+    use SoftDeletes;
+
+    protected $table = 'refrigerantes';
 
     protected $fillable = [
-        'marca',
-        'tipo',
-        'sabor',
         'litragem',
+        'tipo',
+        'quantidade',
         'valor_unitario',
-        'quantidade'
     ];
 
-    protected $attributes = [
-        'litragem' => 0,
-        'valor_unitario' => 0.0,
-        'quatidade' => 0
+    protected $dates = [
+        self::CREATED_AT,
+        self::UPDATED_AT,
+        'deleted_at'
     ];
+
+    public function marca()
+    {
+        return $this->belongsTo(Marca::class);
+    }
 }
