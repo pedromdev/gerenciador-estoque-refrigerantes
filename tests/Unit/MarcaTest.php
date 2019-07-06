@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Marca;
+use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use Tests\TestCase;
@@ -44,6 +45,36 @@ class MarcaTest extends TestCase
             'nome' => $nome,
             'slug' => $slug,
         ]);
+    }
+
+    public function testAdicionaUmaMarca()
+    {
+        $user = factory(User::class)->create();
+        $nome = 'Coca-Cola';
+
+        $marca = Marca::adicionar($nome, $user);
+
+        $this->assertDatabaseHas('marcas', [
+            'slug' => 'coca-cola'
+        ]);
+        $this->assertEquals($nome, $marca->nome);
+        $this->assertEquals(Str::slug($nome), $marca->slug);
+        $this->assertEquals($user->id, $marca->user->id);
+    }
+
+    /**
+     * @expectedException \App\Exceptions\MarcaRegistradaException
+     */
+    public function testNaoAdicionaUmaMarcaQuandoOUsuarioJaRegistrou()
+    {
+        $nome = 'Coca-Cola';
+        $dados = [
+            'nome' => $nome,
+            'slug' => Str::slug($nome),
+        ];
+        $marca = factory(Marca::class)->create($dados);
+
+        Marca::adicionar($nome, $marca->user);
     }
 
     public function valoresInvalidos()
