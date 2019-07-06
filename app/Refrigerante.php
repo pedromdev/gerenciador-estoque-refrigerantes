@@ -41,7 +41,7 @@ class Refrigerante extends Model
      *
      * @param array $dados
      * @param Marca $marca
-     * @return mixed
+     * @return Refrigerante
      * @throws RefrigeranteRegistradoException Se já houver um refrigerante registrado com a mesma marca e litragem
      */
     public static function adicionar(array $dados, Marca $marca)
