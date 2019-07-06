@@ -10,7 +10,7 @@
     "require": {
         "php": "^7.1.3",
         "fideloper/proxy": "^4.0",
-        "jenssegers/mongodb": "^3.5",
+        "iatstuti/laravel-cascade-soft-deletes": "^1.5",
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0"
     },
@@ -49,6 +49,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
+        "tests": "phpunit tests/",
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
