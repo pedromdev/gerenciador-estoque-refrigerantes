@@ -17,6 +17,7 @@ fi
 if [[ ! -f "$APP_DIR/.env" ]]; then
     echo "Criando arquivo .env..."
     cp "$APP_DIR/.env.example" "$APP_DIR/.env"
+    php artisan key:generate
 fi
 
 if [[ "$(stat -c "%U" "$APP_DIR/storage")" != "www-data" ]]; then
