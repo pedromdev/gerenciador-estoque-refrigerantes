@@ -58,6 +58,45 @@ class RefrigeranteTest extends TestCase
         ]);
     }
 
+    public function testAdicionaUmRefrigeranteNoEstoque()
+    {
+        $marca = factory(Marca::class)->create();
+        $dados = [
+            'litragem' => 2.5,
+            'tipo' => 'Garrafa',
+            'quantidade' => 30,
+            'valor_unitario' => 6.5
+        ];
+
+        $refrigerante = Refrigerante::adicionar($dados, $marca);
+
+        $this->assertDatabaseHas('refrigerantes', [
+            'marca_id' => $marca->id,
+            'litragem' => $dados['litragem']
+        ]);
+        $this->assertEquals($dados['litragem'], $refrigerante->litragem);
+        $this->assertEquals($dados['tipo'], $refrigerante->tipo);
+        $this->assertEquals($dados['quantidade'], $refrigerante->quantidade);
+        $this->assertEquals($dados['valor_unitario'], $refrigerante->valor_unitario);
+        $this->assertEquals($marca->id, $refrigerante->marca->id);
+    }
+
+    /**
+     * @expectedException \App\Exceptions\RefrigeranteRegistradoException
+     */
+    public function testNaoAdicionaUmRefrigeranteNoEstoqueQuandoJaExisteUmComMesmaMarcaELitragem()
+    {
+        $dados = [
+            'litragem' => 2.5,
+            'tipo' => 'Garrafa',
+            'quantidade' => 30,
+            'valor_unitario' => 6.5
+        ];
+        $refrigerante = factory(Refrigerante::class)->create($dados);
+
+        Refrigerante::adicionar($dados, $refrigerante->marca);
+    }
+
     public function valoresInvalidos()
     {
         return [
