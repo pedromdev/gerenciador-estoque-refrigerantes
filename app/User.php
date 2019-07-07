@@ -73,4 +73,18 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    /**
+     * Adiciona um usuário no sistema
+     *
+     * @param array $dados
+     * @return User
+     */
+    public static function adicionar(array $dados)
+    {
+        $dados = array_merge($dados, [ 'password' => bcrypt($dados['password']) ]);
+        $user = new static($dados);
+        $user->save();
+        return $user;
+    }
 }
