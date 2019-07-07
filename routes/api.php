@@ -11,13 +11,21 @@
 |
 */
 
+/*
+|--------------------------------------------------------------------------
+| Autenticação
+|--------------------------------------------------------------------------
+|
+| Rotas da api para autenticação do usuário
+|
+*/
+
 Route::group([ 'prefix' => 'autenticacao' ], function ($router) {
 
     Route::post('/entrar', 'AutenticacaoController@entrar');
 
     Route::group([ 'middleware' => 'auth:api' ], function ($router) {
 
-        Route::get('/me', 'AutenticacaoController@me');
         Route::post('/atualizar', 'AutenticacaoController@atualizar');
         Route::post('/sair', 'AutenticacaoController@sair');
 

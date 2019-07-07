@@ -23,11 +23,6 @@ class AutenticacaoController extends Controller
         return $this->gerarToken($token);
     }
 
-    public function me()
-    {
-        return response()->json(auth()->user());
-    }
-
     public function atualizar()
     {
         return $this->gerarToken(auth()->refresh());
