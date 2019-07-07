@@ -23,14 +23,14 @@ class UsuarioController extends Controller
             'password' => 'required|confirmed|min:6'
         ]);
 
-        if ($validador->fails()) return response()->json($validador->errors()->toArray(), 422);
+        if ($validador->fails()) {
+            return response()->json($validador->errors()->toArray(), 422);
+        }
 
         try {
             User::adicionar(request(['name', 'email', 'password']));
         } catch (\Exception $exception) {
-            return response()->json([
-                'mensagem' => 'Ocorreu um erro ao adicionar o usuário no sistema'
-            ], 500);
+            return response()->json([ 'mensagem' => 'Ocorreu um erro ao adicionar o usuário no sistema' ], 500);
         }
 
         /** @var AutenticacaoController $autenticacaoController */
@@ -56,19 +56,18 @@ class UsuarioController extends Controller
      */
     public function update(Request $request)
     {
-        $userId = auth()->user()->getAuthIdentifier();
+        $user = auth()->user();
         $validador = Validator::make($request->all(), [
             'name' => 'max:255',
-            'email' => "email|unique:users,email,$userId",
+            'email' => "email|unique:users,email,$user->id",
             'password' => 'confirmed|min:6'
         ]);
 
-        if ($validador->fails()) return response()->json($validador->errors()->toArray(), 422);
+        if ($validador->fails()) {
+            return response()->json($validador->errors()->toArray(), 422);
+        }
 
-        $user = User::find($userId);
-        $dados = array_filter(request(['name', 'email', 'password']), function($value) {
-            return (bool) $value;
-        });
+        $dados = $this->removerValoresVazios(request(['name', 'email', 'password']));
 
         if (!empty($dados)) {
             foreach ($dados as $prop => $valor) {
@@ -92,8 +91,21 @@ class UsuarioController extends Controller
      */
     public function destroy()
     {
-        $userId = auth()->user()->getAuthIdentifier();
-        User::destroy($userId);
+        auth()->user()->delete();
         return response()->noContent();
+    }
+
+    /**
+     * Remove valores vazios do array
+     *
+     * @param $dados
+     * @return array
+     */
+    private function removerValoresVazios($dados)
+    {
+        $dados = array_filter($dados, function ($value) {
+            return (bool) $value;
+        });
+        return $dados;
     }
 }
