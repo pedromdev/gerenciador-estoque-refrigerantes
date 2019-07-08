@@ -68,6 +68,7 @@
               placeholder="Confirmar senha"
               v-model="form.password_confirmation"
               data-vv-as="confirmar senha"
+              ref="password_confirmation"
             >
           </div>
 
