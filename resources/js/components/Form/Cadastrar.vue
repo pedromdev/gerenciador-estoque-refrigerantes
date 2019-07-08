@@ -1,28 +1,39 @@
 <template>
-  <form class="ui large form" v-on:submit.prevent="onSubmit">
+  <form class="ui large form" v-bind:class="{ error: erros.tem() }" v-on:submit.prevent="onSubmit">
 
     <div class="ui centered grid">
       <div class="sixteen wide mobile ten wide computer column">
 
-        <div class="field">
+        <div class="field" v-bind:class="{ error: erros.tem('name') }">
           <div class="ui left icon input">
             <i class="user icon"></i>
-            <input type="text" name="name" placeholder="Nome" v-model="form.name">
+            <input
+              type="text"
+              name="name"
+              placeholder="Nome"
+              v-model="form.name"
+            >
           </div>
+
+          <label v-if="erros.tem('name')">{{ erros.primeiro('name') }}</label>
         </div>
 
-        <div class="field">
+        <div class="field" v-bind:class="{ error: erros.tem('email') }">
           <div class="ui left icon input">
             <i class="at icon"></i>
             <input type="text" name="email" placeholder="E-mail" v-model="form.email">
           </div>
+
+          <label v-if="erros.tem('email')">{{ erros.primeiro('email') }}</label>
         </div>
 
-        <div class="field">
+        <div class="field" v-bind:class="{ error: erros.tem('password') }">
           <div class="ui left icon input">
             <i class="lock icon"></i>
             <input type="password" name="password" placeholder="Senha" v-model="form.password">
           </div>
+
+          <label v-if="erros.tem('password')">{{ erros.primeiro('password') }}</label>
         </div>
 
         <div class="field">
@@ -64,11 +75,13 @@
       };
     },
     methods: {
-      ...mapGetters([ 'erros' ]),
       ...mapActions([ 'adicionarUsuario' ]),
       onSubmit() {
         this.adicionarUsuario(this.form);
       }
+    },
+    computed: {
+      ...mapGetters([ 'erros' ]),
     }
   }
 </script>
