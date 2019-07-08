@@ -25,7 +25,7 @@ RUN docker-php-ext-install \
     bcmath \
     zip
 
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - && \
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
     apt-get install -y nodejs
 
 RUN a2enmod rewrite \
