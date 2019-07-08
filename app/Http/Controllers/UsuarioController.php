@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Utils\ErrosValidacao;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class UsuarioController extends Controller
 {
+
+    use ErrosValidacao;
 
     /**
      * Store a newly created resource in storage.
@@ -24,7 +27,7 @@ class UsuarioController extends Controller
         ]);
 
         if ($validador->fails()) {
-            return response()->json($validador->errors()->toArray(), 422);
+            return $this->retornarErrosDoValidador($validador);
         }
 
         try {
@@ -64,7 +67,7 @@ class UsuarioController extends Controller
         ]);
 
         if ($validador->fails()) {
-            return response()->json($validador->errors()->toArray(), 422);
+            return $this->retornarErrosDoValidador($validador);
         }
 
         $dados = $this->removerValoresVazios(request(['name', 'email', 'password']));
