@@ -67,7 +67,8 @@ Route::group([ 'prefix' => 'usuarios' ], function () {
 Route::group([ 'middleware' => 'auth:api' ], function ($router) {
 
     $router->apiResources([
-        'marcas' => 'MarcaController'
+        'marcas' => 'MarcaController',
+        'refrigerantes' => 'RefrigeranteController',
     ]);
 
 });
