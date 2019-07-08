@@ -3,9 +3,7 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Marca;
-use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 use Tests\Utils\LoginUsuario;
@@ -14,38 +12,6 @@ class MarcaControllerTest extends TestCase
 {
 
     use RefreshDatabase, LoginUsuario;
-
-    /**
-     * @var User
-     */
-    private $user;
-
-    /**
-     * @var TestResponse
-     */
-    private $login;
-
-    /**
-     * @var string
-     */
-    private $token;
-
-    /**
-     * Método para logar o usuário antes de cada teste.
-     *
-     * OBS: Não foi possível usar a anotação before por conta de erros (possivelmente por falta de inicialização)
-     * nos helpers.
-     */
-    public function logarUsuarioDosTestes()
-    {
-        $email = 'email@example.com';
-        $senha = '123456';
-        $senhaEncriptada = bcrypt($senha);
-
-        $this->user = factory(User::class)->create([ 'email' => $email, 'password' => $senhaEncriptada ]);
-        $this->login = $this->logarUsuario($email, $senha);
-        $this->token = $this->login->json('access_token');
-    }
 
     /**
      * @after
