@@ -66,7 +66,8 @@ class UsuarioController extends Controller
         $validador = Validator::make($request->all(), [
             'name' => 'max:255',
             'email' => "email|unique:users,email,$user->id",
-            'password' => 'confirmed|min:6'
+            'password' => 'confirmed|min:6',
+            'password_confirmation' => 'min:6',
         ]);
 
         if ($validador->fails()) {
