@@ -10,10 +10,10 @@ axios.auth = () => {
     headers: { Authorization: `Bearer ${token.access_token}` }
   });
 
-  instance.autenticacao = axios.create({ baseURL: '/autenticacao' });
-  instance.usuarios = axios.create({ baseURL: '/usuarios' });
-  instance.marcas = axios.create({ baseURL: '/marcas' });
-  instance.refrigerantes = axios.create({ baseURL: '/refrigerantes' });
+  instance.autenticacao = axios.create({ baseURL: '/api/autenticacao' });
+  instance.usuarios = axios.create({ baseURL: '/api/usuarios' });
+  instance.marcas = axios.create({ baseURL: '/api/marcas' });
+  instance.refrigerantes = axios.create({ baseURL: '/api/refrigerantes' });
 
   return instance;
 };
