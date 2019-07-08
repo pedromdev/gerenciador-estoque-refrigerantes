@@ -53,5 +53,21 @@ Route::group([ 'prefix' => 'usuarios' ], function () {
         Route::delete('', 'UsuarioController@destroy');
 
     });
+});
+
+/*
+|--------------------------------------------------------------------------
+| Marcas
+|--------------------------------------------------------------------------
+|
+| Rotas da api para leitura e manipulação dos dados das marcas de refrigerante
+|
+*/
+
+Route::group([ 'middleware' => 'auth:api' ], function ($router) {
+
+    $router->apiResources([
+        'marcas' => 'MarcaController'
+    ]);
 
 });
