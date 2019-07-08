@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Utils\DadosRequisicao;
 use App\Http\Controllers\Utils\ErrosValidacao;
+use App\Http\Controllers\Utils\ManipularModel;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -10,7 +12,7 @@ use Illuminate\Support\Facades\Validator;
 class UsuarioController extends Controller
 {
 
-    use ErrosValidacao;
+    use ErrosValidacao, DadosRequisicao, ManipularModel;
 
     /**
      * Store a newly created resource in storage.
@@ -60,6 +62,7 @@ class UsuarioController extends Controller
     public function update(Request $request)
     {
         $user = auth()->user();
+        $mensagemErro = 'Ocorreu um erro ao atualizar os dados do usuário';
         $validador = Validator::make($request->all(), [
             'name' => 'max:255',
             'email' => "email|unique:users,email,$user->id",
@@ -71,18 +74,9 @@ class UsuarioController extends Controller
         }
 
         $dados = $this->removerValoresVazios(request(['name', 'email', 'password']));
+        $resposta = $this->atualizarDados($dados, $user, $mensagemErro);
 
-        if (!empty($dados)) {
-            foreach ($dados as $prop => $valor) {
-                $user->{$prop} = $valor;
-            }
-
-            try {
-                $user->save();
-            } catch (\Exception $exception) {
-                return response()->json([ 'mensagem' => 'Ocorreu um erro ao atualizar os dados do usuário' ], 500);
-            }
-        }
+        if ($resposta) return $resposta;
 
         return response()->json($user);
     }
@@ -96,19 +90,5 @@ class UsuarioController extends Controller
     {
         auth()->user()->delete();
         return response()->noContent();
-    }
-
-    /**
-     * Remove valores vazios do array
-     *
-     * @param $dados
-     * @return array
-     */
-    private function removerValoresVazios($dados)
-    {
-        $dados = array_filter($dados, function ($value) {
-            return (bool) $value;
-        });
-        return $dados;
     }
 }
