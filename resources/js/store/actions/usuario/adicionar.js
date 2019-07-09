@@ -1,4 +1,5 @@
 import api from '../../../api';
+import router from '../../../router';
 
 export default ({ dispatch, commit }, dados) => {
   api.post('/api/usuarios', dados)
@@ -6,5 +7,6 @@ export default ({ dispatch, commit }, dados) => {
     .then(token => {
       localStorage.setItem('token', JSON.stringify(token));
       dispatch('pegarUsuario');
+      router.push('/');
     }).catch(e => commit('exibirErros', e.response.data));
 }
