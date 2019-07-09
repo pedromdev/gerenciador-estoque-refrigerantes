@@ -1,10 +1,10 @@
 <template>
-  <form class="ui large form" v-bind:class="{ error: erros.tem() }" v-on:submit.prevent="onSubmit">
+  <form class="ui large form" v-bind:class="{ error: erros.tem() || errors.has() }" v-on:submit.prevent="onSubmit">
 
     <div class="ui centered grid">
       <div class="sixteen wide mobile ten wide computer column">
 
-        <div class="field" v-bind:class="{ error: erros.tem('name') }">
+        <field name="name" :errorsBag="errors">
           <div class="ui left icon input">
             <i class="user icon"></i>
             <input
@@ -12,40 +12,54 @@
               name="name"
               placeholder="Nome"
               v-model="form.name"
+              v-validate="'required|max:255'"
+              data-vv-as="Nome"
             >
           </div>
+        </field>
 
-          <label v-if="erros.tem('name')">{{ erros.primeiro('name') }}</label>
-        </div>
-
-        <div class="field" v-bind:class="{ error: erros.tem('email') }">
+        <field name="email" :errorsBag="errors">
           <div class="ui left icon input">
             <i class="at icon"></i>
-            <input type="text" name="email" placeholder="E-mail" v-model="form.email">
+            <input
+              type="text"
+              name="email"
+              placeholder="E-mail"
+              v-model="form.email"
+              v-validate="'required|email'"
+              data-vv-as="E-mail"
+            >
           </div>
+        </field>
 
-          <label v-if="erros.tem('email')">{{ erros.primeiro('email') }}</label>
-        </div>
-
-        <div class="field" v-bind:class="{ error: erros.tem('password') }">
+        <field name="password" :errorsBag="errors">
           <div class="ui left icon input">
             <i class="lock icon"></i>
-            <input type="password" name="password" placeholder="Senha" v-model="form.password">
+            <input
+              type="password"
+              name="password"
+              placeholder="Senha"
+              v-model="form.password"
+              v-validate="'required|min:6|confirmed:password_confirmation'"
+              data-vv-as="Senha"
+            >
           </div>
+        </field>
 
-          <label v-if="erros.tem('password')">{{ erros.primeiro('password') }}</label>
-        </div>
-
-        <div class="field">
+        <field name="password_confirmation" :errorsBag="errors">
           <div class="ui left icon input">
             <i class="lock icon"></i>
             <input
               type="password"
               name="password_confirmation"
               placeholder="Confirmar senha"
-              v-model="form.password_confirmation">
+              v-model="form.password_confirmation"
+              v-validate="'required|min:6'"
+              ref="password_confirmation"
+              data-vv-as="Confirmar senha"
+            >
           </div>
-        </div>
+        </field>
 
         <button type="submit" class="ui fluid large blue submit button">Começar</button>
 
@@ -60,7 +74,7 @@
 </template>
 
 <script>
-  import {mapGetters, mapActions} from 'vuex';
+  import {mapActions, mapGetters} from 'vuex';
 
   export default {
     name: "CadastrarForm",
@@ -77,7 +91,11 @@
     methods: {
       ...mapActions([ 'adicionarUsuario' ]),
       onSubmit() {
-        this.adicionarUsuario(this.form);
+        this.$validator.validateAll().then(resultado => {
+          if (resultado) {
+            this.adicionarUsuario(this.form);
+          }
+        });
       }
     },
     computed: {
