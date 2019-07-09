@@ -2,7 +2,7 @@ import VueRouter from "vue-router";
 
 import EntrarPage from './pages/EntrarPage';
 import CadastrarPage from './pages/CadastrarPage';
-import Refrigerantes from './pages/Refrigerantes';
+import RefrigerantesPage from './pages/RefrigerantesPage';
 
 const routes = [
   {
@@ -17,7 +17,7 @@ const routes = [
   },
   {
     name: 'refrigerantes',
-    component: Refrigerantes,
+    component: RefrigerantesPage,
     path: '/'
   },
   {
