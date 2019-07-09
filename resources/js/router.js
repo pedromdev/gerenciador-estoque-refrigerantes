@@ -30,6 +30,8 @@ router.beforeEach((to, from, next) => {
 
   if (!rotasDesbloqueadas.includes(to.name) && !localStorage.getItem('token')) {
     return router.push('/entrar');
+  } else if (rotasDesbloqueadas.includes(to.name) && localStorage.getItem('token')) {
+    return router.push('/');
   }
 
   next();
