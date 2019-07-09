@@ -82,11 +82,33 @@ class AutenticacaoControllerTest extends TestCase
         $responseAtualizar->assertStatus(204);
     }
 
+    /**
+     * @param string $email
+     * @param string $senha
+     *
+     * @dataProvider dadosInvalidos
+     */
+    public function testNaoLogaOUsuarioComDadosInvalidos($email, $senha)
+    {
+        $response = $this->logarUsuario($email, $senha);
+
+        $response->assertStatus(422);
+    }
+
     public function credendiaisInvalidas()
     {
         return [
             ['email2@example.com', '123456'],
             ['email@example.com', '654321'],
+        ];
+    }
+
+    public function dadosInvalidos()
+    {
+        return [
+            ['', '123456'],
+            ['pedro@mail.com', ''],
+            ['pedro', '123456'],
         ];
     }
 }

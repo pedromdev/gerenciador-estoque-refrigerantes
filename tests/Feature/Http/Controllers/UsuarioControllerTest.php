@@ -164,6 +164,15 @@ class UsuarioControllerTest extends TestCase
                 [
                     'name' => 'Pedro Marcelo',
                     'email' => 'pedro2@email.com',
+                    'password_confirmation' => '123456',
+                ]
+            ],
+            // Confirmar senha faltando
+            [
+                [
+                    'name' => 'Pedro Marcelo',
+                    'email' => 'pedro2@email.com',
+                    'password' => '123456',
                 ]
             ],
             // Nome maior do que o permitido
@@ -190,6 +199,15 @@ class UsuarioControllerTest extends TestCase
                     'name' => 'Pedro Marcelo',
                     'email' => 'pedro2@email.com',
                     'password' => '12345',
+                    'password_confirmation' => '123456',
+                ]
+            ],
+            // Confirmar senha menor do que o permitido
+            [
+                [
+                    'name' => 'Pedro Marcelo',
+                    'email' => 'pedro2@email.com',
+                    'password' => '123456',
                     'password_confirmation' => '12345',
                 ]
             ],
@@ -199,7 +217,7 @@ class UsuarioControllerTest extends TestCase
                     'name' => 'Pedro Marcelo',
                     'email' => 'pedro2@email.com',
                     'password' => '123456',
-                    'password_confirmation' => '12345',
+                    'password_confirmation' => '123457',
                 ]
             ],
         ];

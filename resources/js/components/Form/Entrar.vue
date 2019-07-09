@@ -1,22 +1,36 @@
 <template>
-  <form class="ui large form">
+  <form class="ui large form" v-bind:class="{ error: errors.has() }" v-on:submit.prevent="onSubmit">
 
     <div class="ui centered grid">
       <div class="sixteen wide mobile ten wide computer column">
 
-        <div class="field">
+        <field name="email" :errorsBag="errors">
           <div class="ui left icon input">
             <i class="at icon"></i>
-            <input type="text" name="email" placeholder="E-mail">
+            <input
+              type="text"
+              name="email"
+              placeholder="E-mail"
+              v-validate="'required|email'"
+              data-vv-as="E-mail"
+              v-model="credenciais.email"
+            >
           </div>
-        </div>
+        </field>
 
-        <div class="field">
+        <field name="password" :errorsBag="errors">
           <div class="ui left icon input">
             <i class="lock icon"></i>
-            <input type="password" name="password" placeholder="Senha">
+            <input
+              type="password"
+              name="password"
+              placeholder="Senha"
+              v-validate="'required'"
+              data-vv-as="Senha"
+              v-model="credenciais.password"
+            >
           </div>
-        </div>
+        </field>
 
         <button type="submit" class="ui fluid large blue submit button">Entrar</button>
 
@@ -31,7 +45,30 @@
 </template>
 
 <script>
+  import {mapActions, mapGetters} from 'vuex';
+
   export default {
-    name: "EntrarForm"
+    name: "EntrarForm",
+    data() {
+      return {
+        credenciais: {
+          email: '',
+          password: '',
+        }
+      };
+    },
+    methods: {
+      ...mapActions([ 'logarUsuario' ]),
+      onSubmit() {
+        this.$validator.validateAll().then(resultado => {
+          if (!resultado) return;
+
+          this.logarUsuario(this.credenciais);
+        })
+      }
+    },
+    comments: {
+      ...mapGetters([ 'erros' ])
+    }
   }
 </script>

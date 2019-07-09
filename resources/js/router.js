@@ -2,6 +2,7 @@ import VueRouter from "vue-router";
 
 import EntrarPage from './pages/EntrarPage';
 import CadastrarPage from './pages/CadastrarPage';
+import RefrigerantesPage from './pages/RefrigerantesPage';
 
 const routes = [
   {
@@ -13,6 +14,11 @@ const routes = [
     name: 'cadastrar',
     component: CadastrarPage,
     path: '/cadastrar',
+  },
+  {
+    name: 'refrigerantes',
+    component: RefrigerantesPage,
+    path: '/'
   },
   {
     path: '*',

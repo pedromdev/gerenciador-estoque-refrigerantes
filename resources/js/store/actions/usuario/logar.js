@@ -2,7 +2,7 @@ import api from '../../../api';
 import router from '../../../router';
 
 export default ({ dispatch, commit }, credenciais) => {
-  api.post('/autenticacao/entrar', credenciais)
+  api.post('/api/autenticacao/entrar', credenciais)
     .then(res => res.data)
     .then(token => {
       localStorage.setItem('token', JSON.stringify(token));

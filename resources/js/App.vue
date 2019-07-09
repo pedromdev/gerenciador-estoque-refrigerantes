@@ -7,3 +7,9 @@
     name: "App"
   }
 </script>
+
+<style>
+  body {
+    background-color: #dadada;
+  }
+</style>
