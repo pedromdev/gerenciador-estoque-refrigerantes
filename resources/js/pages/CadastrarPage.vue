@@ -1,5 +1,5 @@
 <template>
-  <div class="main ui container">
+  <div class="main ui container fluid">
     <div class="ui centered grid no margin bottom no margin top">
 
       <div class="eight wide computer column computer only background image primary"></div>
