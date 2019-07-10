@@ -27,8 +27,6 @@
 <script>
   export default {
     name: "CadastrarPage",
-    mounted() {
-      document.title = 'Cadastrar | Gerenciador de estoque';
-    }
+    titulo: 'Cadastrar'
   }
 </script>
