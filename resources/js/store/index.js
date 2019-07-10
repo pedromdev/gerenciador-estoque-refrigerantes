@@ -10,7 +10,7 @@ export default new Store({
   state: {
     carregando: false,
     erros: {},
-    usuario: null,
+    usuario: {},
     marca: null,
     marcas: [],
     refrigerante: null,

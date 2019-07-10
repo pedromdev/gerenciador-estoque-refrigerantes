@@ -1,17 +1,21 @@
 <template>
   <div class="ui blue grid centered">
 
-    <div class="row">
+    <div class="row background white no padding bottom">
 
-      <div class="column sixteen wide no padding right">
+      <div class="column sixteen wide">
 
-        <div class="ui menu">
+        <div class="ui ge menu secondary">
 
           <div class="ui main container">
 
-            <router-link to="/" class="item">
-              <h4 class="ui blue header">Gerenciador de estoque</h4>
+            <router-link to="/" class="item no margin left">
+              <h5 class="ui blue header">Gerenciador</h5>
             </router-link>
+
+            <div class="right menu">
+              <span class="item">Bem-vindo, {{ nomeUsuario() }}!</span>
+            </div>
 
           </div>
 
@@ -19,8 +23,8 @@
 
       </div>
 
-      <div class="column sixteen wide mobile only no padding right">
-        <div class="ui blue menu no margin bottom">
+      <div class="column sixteen wide mobile only">
+        <div class="ui blue ge menu no margin bottom">
 
           <a class="launch icon item" @click.prevent="alternarMenu">
             <i class="content icon"></i>
@@ -34,7 +38,7 @@
       <div class="column sixteen wide background white" :class="{ computer: menuAtivo, only: menuAtivo }">
         <div class="main ui container">
 
-          <div class="ui blue secondary stackable menu">
+          <div class="ui blue secondary ge stackable menu">
 
             <router-link to="/" class="item">
               <i class="icon beer"></i> Refrigerantes
@@ -57,7 +61,7 @@
 </template>
 
 <script>
-  import {mapActions} from 'vuex';
+  import {mapActions, mapGetters} from 'vuex';
 
   export default {
     name: "Navbar",
@@ -72,7 +76,17 @@
       ]),
       alternarMenu() {
         this.menuAtivo = !this.menuAtivo;
+      },
+      nomeUsuario() {
+        if (!this.usuario || !this.usuario.name) return '';
+
+        return this.usuario.name.split(' ')[0];
       }
+    },
+    computed: {
+      ...mapGetters([
+        'usuario'
+      ])
     }
   }
 </script>
