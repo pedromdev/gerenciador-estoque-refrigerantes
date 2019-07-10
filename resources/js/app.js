@@ -17,6 +17,11 @@ Vue.use(VeeValidate, {
 });
 Validator.localize("pt_BR", pt_BR);
 
+router.beforeEach((to, from, next) => {
+  store.commit('exibirErros', {});
+  next();
+});
+
 const app = new Vue(
   Vue.util.extend({
     router,
