@@ -18,7 +18,13 @@ Vue.use(VeeValidate, {
 Validator.localize("pt_BR", pt_BR);
 
 router.beforeEach((to, from, next) => {
+  const rotasDesbloqueadas = ['entrar', 'cadastrar'];
   store.commit('exibirErros', {});
+
+  if (!rotasDesbloqueadas.includes(to.name) && localStorage.getItem('token')) {
+    store.dispatch('pegarUsuario');
+  }
+
   next();
 });
 

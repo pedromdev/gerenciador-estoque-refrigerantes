@@ -8,7 +8,6 @@ export default ({ dispatch, commit }, credenciais) => {
     .then(res => res.data)
     .then(token => {
       localStorage.setItem('token', JSON.stringify(token));
-      dispatch('pegarUsuario');
       router.push('/');
     }).catch(e => {
       if (e.response.status === 401) {
