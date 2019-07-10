@@ -16,6 +16,7 @@ services:
       DB_USERNAME: mansys
       DB_PASSWORD: DEzeY6cRt0H4ZcJV
       JWT_SECRET: joJfUJmgkM2aWyLqj48L7MAvO2LpM7b3e1Me9rbKQYhvyqkUOnyJAUL6a4YCxPxh
+      JWT_TTL: 20160
     depends_on:
       - db
   db:
