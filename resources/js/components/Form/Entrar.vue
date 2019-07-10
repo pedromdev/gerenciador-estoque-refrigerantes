@@ -1,5 +1,5 @@
 <template>
-  <form class="ui large form" v-bind:class="{ error: errors.has() }" v-on:submit.prevent="onSubmit">
+  <form class="ui large form" v-bind:class="{ error: errors.has() || erros.tem() }" v-on:submit.prevent="onSubmit">
 
     <div class="ui centered grid">
       <div class="sixteen wide mobile ten wide computer column">
@@ -49,6 +49,9 @@
 
   export default {
     name: "EntrarForm",
+    mounted() {
+      console.log(this.carregando);
+    },
     data() {
       return {
         credenciais: {
@@ -67,7 +70,7 @@
         })
       }
     },
-    comments: {
+    computed: {
       ...mapGetters([ 'erros' ])
     }
   }
