@@ -1,6 +1,8 @@
 import api from '../../../api';
 
 export default ({ commit, state }, id, dados) => {
+  commit('carregando', true);
+
   api.auth().refrigerantes.post(`/${id}`, dados)
     .then(res => res.data)
     .then(refrigerante => {
@@ -15,5 +17,6 @@ export default ({ commit, state }, id, dados) => {
 
       commit('listarRefrigerantes', refrigerantes);
     })
-    .catch(e => commit('exibirErros', e.response.data));
+    .catch(e => commit('exibirErros', e.response.data))
+    .finally(() => commit('carregando', false));
 }

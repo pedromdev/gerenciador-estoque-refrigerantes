@@ -2,6 +2,8 @@ import api from '../../../api';
 import router from '../../../router';
 
 export default ({ dispatch, commit }, credenciais) => {
+  commit('carregando', true);
+
   api.post('/api/autenticacao/entrar', credenciais)
     .then(res => res.data)
     .then(token => {
@@ -16,5 +18,6 @@ export default ({ dispatch, commit }, credenciais) => {
       } else {
         commit('exibirErros', e.response.data)
       }
-    });
+    })
+    .finally(() => commit('carregando', false));
 }
