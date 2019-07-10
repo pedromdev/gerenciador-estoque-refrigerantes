@@ -1,4 +1,4 @@
-require('./bootstrap');
+require('./semantic');
 
 window.Vue = require('vue');
 
