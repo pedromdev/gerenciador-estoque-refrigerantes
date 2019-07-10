@@ -1,14 +1,14 @@
 <template>
-  
+  <layout></layout>
 </template>
 
 <script>
-  import {mapGetters, mapActions} from 'vuex';
+  import {mapActions, mapGetters} from 'vuex';
 
   export default {
     name: "RefrigerantesPage",
+    titulo: 'Lista de refrigerantes',
     mounted() {
-      document.title = 'Lista de refrigerantes | Gerenciador de estoque';
       this.listarRefrigerantes();
     },
     methods: {

@@ -33,12 +33,21 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   const rotasDesbloqueadas = ['entrar', 'cadastrar'];
+  const titulos = ['Gerenciador de estoque'];
 
   if (!rotasDesbloqueadas.includes(to.name) && !localStorage.getItem('token')) {
     return router.push('/entrar');
   } else if (rotasDesbloqueadas.includes(to.name) && localStorage.getItem('token')) {
     return router.push('/');
   }
+
+  const titulosPagina = to.matched
+    .map(route => Object.values(route.components))
+    .reduce((componentes, c) => componentes.concat(c), [])
+    .filter(componente => !!componente.titulo)
+    .map(componente => componente.titulo);
+
+  document.title = titulosPagina.concat(titulos).join(' | ');
 
   next();
 });

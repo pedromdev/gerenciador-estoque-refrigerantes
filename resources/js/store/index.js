@@ -8,6 +8,7 @@ Vue.use(Vuex);
 
 export default new Store({
   state: {
+    carregando: false,
     erros: {},
     usuario: null,
     marca: null,

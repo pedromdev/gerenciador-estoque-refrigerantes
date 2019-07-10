@@ -1,5 +1,5 @@
 <template>
-  <div class="main ui container">
+  <div class="main ui container fluid">
     <div class="ui centered grid no margin bottom no margin top">
 
       <div class="sixteen wide mobile eight wide computer column background very lighter gray full height">
@@ -28,9 +28,6 @@
 
   export default {
     name: "EntrarPage",
-
-    mounted() {
-      document.title = 'Entrar | Gerenciador de estoque';
-    }
+    titulo: 'Entrar'
   }
 </script>

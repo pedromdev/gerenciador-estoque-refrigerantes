@@ -1,6 +1,7 @@
 const getterPorCampo = campo => state => state[campo];
 
 export default {
+  carregando: getterPorCampo('carregando'),
   erros: state => ({
     tem(campo) {
       if (!campo) {

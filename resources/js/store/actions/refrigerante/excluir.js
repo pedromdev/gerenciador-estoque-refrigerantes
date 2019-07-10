@@ -1,6 +1,8 @@
 import api from '../../../api';
 
 export default ({ commit, state }, id) => {
+  commit('carregando', true);
+
   api.auth().refrigerantes.delete(`/${id}`)
     .then(() => {
       const { refrigerantes } = state;
@@ -12,5 +14,6 @@ export default ({ commit, state }, id) => {
 
       commit('listarRefrigerantes', refrigerantes);
     })
-    .catch(e => commit('exibirErros', e.response.data));
+    .catch(e => commit('exibirErros', e.response.data))
+    .finally(() => commit('carregando', false));
 }
