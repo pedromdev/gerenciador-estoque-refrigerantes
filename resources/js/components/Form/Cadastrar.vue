@@ -61,7 +61,7 @@
           </div>
         </field>
 
-        <button type="submit" class="ui fluid large blue submit button">Começar</button>
+        <ge-button type="submit" class="ui fluid large blue submit button">Começar</ge-button>
 
         <p class="ui message small text center">
           Já possui uma conta? <router-link to="/entrar">Faça o seu login</router-link>

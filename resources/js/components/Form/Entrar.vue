@@ -32,7 +32,7 @@
           </div>
         </field>
 
-        <button type="submit" class="ui fluid large blue submit button">Entrar</button>
+        <ge-button type="submit" class="ui fluid large blue submit button">Entrar</ge-button>
 
         <p class="ui message small text center">
           Novo aqui? <router-link to="/cadastrar">Cadastre-se agora</router-link>
