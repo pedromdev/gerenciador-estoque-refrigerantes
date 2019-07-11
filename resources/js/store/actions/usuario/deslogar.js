@@ -1,18 +1,29 @@
 import api from '../../../api';
 import router from '../../../router';
 
+function reiniciarEstado(commit) {
+  localStorage.clear();
+  commit('exibirErros', {});
+  commit('pegarUsuario', {});
+  commit('pegarMarca', {});
+  commit('listarMarcas', []);
+  commit('pegarRefrigerante', {});
+  commit('listarRefrigerantes', []);
+  router.push('/entrar');
+}
+
 export default ({ commit }) => {
   commit('carregando', true);
 
-  api.auth().autenticacao.post('/sair').then(() => {
-    localStorage.clear();
-    commit('exibirErros', {});
-    commit('pegarUsuario', null);
-    commit('pegarMarca', null);
-    commit('listarMarcas', []);
-    commit('pegarRefrigerante', null);
-    commit('listarRefrigerantes', []);
-    router.push('/entrar');
-  }).catch(e => commit('exibirErros', e.response.data))
+  api.auth().autenticacao.post('/sair')
+    .then(() => reiniciarEstado(commit))
+    .catch(e => {
+      console.log(e);
+      if (e.status === 401) {
+        reiniciarEstado(commit)
+      } else {
+        commit('exibirErros', e.response.data)
+      }
+    })
     .finally(() => commit('carregando', false));
 }

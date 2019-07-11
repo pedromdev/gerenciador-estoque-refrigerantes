@@ -18,6 +18,7 @@ export default {
   }),
   usuario: getterPorCampo('usuario'),
   marca: getterPorCampo('marca'),
+  pegarMarca: id => state => state.marcas && state.marcas.find(marca => marca.id === id) || {},
   marcas: getterPorCampo('marcas'),
   refrigerante: getterPorCampo('refrigerante'),
   refrigerantes: getterPorCampo('refrigerantes'),

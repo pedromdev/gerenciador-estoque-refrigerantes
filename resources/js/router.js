@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import EntrarPage from './pages/EntrarPage';
 import CadastrarPage from './pages/CadastrarPage';
 import RefrigerantesPage from './pages/RefrigerantesPage';
+import RefrigeranteFormPage from './pages/RefrigeranteFormPage';
 
 const routes = [
   {
@@ -19,6 +20,18 @@ const routes = [
     name: 'refrigerantes',
     component: RefrigerantesPage,
     path: '/'
+  },
+  {
+    name: 'novo-refrigerante',
+    component: RefrigeranteFormPage,
+    path: '/refrigerantes/novo',
+    titulo: 'Novo refrigerante'
+  },
+  {
+    name: 'editar-refrigerante',
+    component: RefrigeranteFormPage,
+    path: '/refrigerantes/:id',
+    titulo: 'Editar refrigerante'
   },
   {
     path: '*',
@@ -42,7 +55,7 @@ router.beforeEach((to, from, next) => {
   }
 
   const titulosPagina = to.matched
-    .map(route => Object.values(route.components))
+    .map(route => [ { titulo: route.titulo }, ...Object.values(route.components)])
     .reduce((componentes, c) => componentes.concat(c), [])
     .filter(componente => !!componente.titulo)
     .map(componente => componente.titulo);

@@ -49,9 +49,6 @@
 
   export default {
     name: "EntrarForm",
-    mounted() {
-      console.log(this.carregando);
-    },
     data() {
       return {
         credenciais: {

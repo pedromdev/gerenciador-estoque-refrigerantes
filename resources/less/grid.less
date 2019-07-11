@@ -1,0 +1,37 @@
+.full {
+  &.height {
+    height: 100vh;
+  }
+}
+
+.overflow {
+
+  &.scroll {
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &:not(.y):not(.x) {
+      overflow: scroll;
+    }
+
+    &.y {
+      overflow-y: scroll;
+    }
+
+    &.x {
+      overflow-x: scroll;
+    }
+
+  }
+
+}
+
+.row {
+
+  &.shadow {
+    border-bottom: 1px solid rgba(34,36,38,.15);
+  }
+
+}

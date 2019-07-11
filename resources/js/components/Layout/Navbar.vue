@@ -1,16 +1,16 @@
 <template>
-  <div class="ui blue grid centered">
+  <div class="ui stackable one column grid">
 
-    <div class="row background white no padding bottom">
+    <div class="row background white no padding bottom shadow">
 
-      <div class="column sixteen wide">
+      <div class="column sixteen wide no padding bottom cabecalho-menu" style="padding-bottom: 0!important;">
 
         <div class="ui ge menu secondary">
 
           <div class="ui main container">
 
             <router-link to="/" class="item no margin left">
-              <h5 class="ui blue header">Gerenciador</h5>
+              <h4 class="ui blue header">Gerenciador</h4>
             </router-link>
 
             <div class="right menu">
@@ -23,7 +23,7 @@
 
       </div>
 
-      <div class="column sixteen wide mobile only">
+      <div class="column sixteen wide mobile only no padding">
         <div class="ui blue ge menu no margin bottom">
 
           <a class="launch icon item" @click.prevent="alternarMenu">
@@ -35,10 +35,11 @@
         </div>
       </div>
 
-      <div class="column sixteen wide background white" :class="{ computer: menuAtivo, only: menuAtivo }">
-        <div class="main ui container">
+      <div class="column sixteen wide background white" :class="{ tablet: menuAtivo, computer: menuAtivo, only: menuAtivo }">
 
-          <div class="ui blue secondary ge stackable menu">
+        <div class="ui blue secondary ge stackable menu">
+
+          <div class="main ui container">
 
             <router-link to="/" class="item">
               <i class="icon beer"></i> Refrigerantes
@@ -55,6 +56,7 @@
           </div>
         </div>
       </div>
+
     </div>
 
   </div>

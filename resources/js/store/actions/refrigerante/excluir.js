@@ -1,6 +1,7 @@
 import api from '../../../api';
+import {tratarErroRequisao} from "../../helpers";
 
-export default ({ commit, state }, id) => {
+export default ({ commit, dispatch, state }, id) => {
   commit('carregando', true);
 
   api.auth().refrigerantes.delete(`/${id}`)
@@ -14,6 +15,6 @@ export default ({ commit, state }, id) => {
 
       commit('listarRefrigerantes', refrigerantes);
     })
-    .catch(e => commit('exibirErros', e.response.data))
+    .catch(tratarErroRequisao(commit, dispatch))
     .finally(() => commit('carregando', false));
 }
