@@ -29,7 +29,8 @@
       <td>
         <a
           href="#"
-          class="ui icon circular red button">
+          class="ui icon circular red button"
+          v-on:click.prevent="confirmarExcluisaoRefrigerante(refrigerante.id)">
           <i class="trash alternate icon"></i>
         </a>
       </td>
@@ -39,13 +40,22 @@
 </template>
 
 <script>
-  import {mapGetters} from 'vuex';
+  import {mapGetters, mapActions} from 'vuex';
 
   export default {
     name: "Refrigerantes",
     props: [ 'refrigerantes' ],
     methods: {
+      ...mapActions([
+        'excluirRefrigerante'
+      ]),
+      confirmarExcluisaoRefrigerante(id) {
+        const resultado = confirm('Tem certeza que deseja excluir este refrigerante?');
 
+        if (resultado) {
+          this.excluirRefrigerante(id);
+        }
+      }
     },
     computed: {
       ...mapGetters([
