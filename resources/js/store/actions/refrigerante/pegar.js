@@ -6,7 +6,7 @@ export default ({ commit, dispatch }, id) => {
 
   api.auth().refrigerantes.get(`/${id}`)
     .then(res => res.data)
-    .then(refrigerantes => commit('listarRefrigerantes', refrigerantes))
+    .then(refrigerantes => commit('pegarRefrigerante', refrigerantes))
     .catch(tratarErroRequisao(commit, dispatch))
-    .finally(() => commit('carregando', true));
+    .finally(() => commit('carregando', false));
 }

@@ -16,10 +16,10 @@
       <td>{{ refrigerante.litragem < 1 ? `${refrigerante.litragem * 1000} mL`: `${refrigerante.litragem} L`}}</td>
       <td>{{ refrigerante.tipo }}</td>
       <td>{{refrigerante.quantidade }}</td>
-      <td>R$ {{ refrigerante.valor.toFixed(2) }}</td>
+      <td>R$ {{ parseFloat(refrigerante.valor_unitario).toFixed(2) }}</td>
       <td>
         <router-link
-          :to="{ path: 'editar-refrigerante', params: { id: refrigerante.id } }"
+          :to="{ name: 'editar-refrigerante', params: { id: refrigerante.id } }"
           class="ui icon circular green button"
           title="Editar refrigerante"
         >

@@ -80,7 +80,6 @@
             placeholder="Valor unitário"
             step="0.01"
             min="0"
-            max="5"
             v-model="form.valor_unitario"
             v-validate="'required|min:0'"
             data-vv-as="Valor unitário"
@@ -115,16 +114,18 @@
   export default {
     name: "RefrigeranteForm",
     mounted() {
-      if (this.refrigerante.id) this.form = this.refrigerante;
+      if (this.$route.params.id) {
+        this.pegarRefrigerante(this.$route.params.id);
+      }
     },
     data() {
       return {
         form: {
-          marca_id: 2,
+          marca_id: null,
           litragem: '',
           tipo: '',
           quantidade: 0,
-          valor: null,
+          valor_unitario: null,
         }
       };
     },
@@ -150,6 +151,7 @@
     },
     watch: {
       refrigerante(novoRefrigerante) {
+        console.log(novoRefrigerante);
         this.form = novoRefrigerante;
       }
     }

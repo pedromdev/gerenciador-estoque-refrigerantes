@@ -18,8 +18,7 @@ export default ({ commit }) => {
   api.auth().autenticacao.post('/sair')
     .then(() => reiniciarEstado(commit))
     .catch(e => {
-      console.log(e);
-      if (e.status === 401) {
+      if (e.response.status === 401) {
         reiniciarEstado(commit)
       } else {
         commit('exibirErros', e.response.data)
