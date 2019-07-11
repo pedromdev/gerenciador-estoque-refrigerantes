@@ -18,6 +18,22 @@ class RefrigeranteController extends Controller
     use ErrosValidacao, DadosRequisicao, ManipularModel;
 
     /**
+     * @var array
+     */
+    private $messages = [
+        'marca_id.required' => 'O campo marca é obrigatório.',
+        'marca_id.exists' => 'A marca informada não existe',
+        'litragem.required' => 'O campo litragem é obrigatório.',
+        'litragem.min' => 'A litragem deve ser maior que 0',
+        'litragem.max' => 'A litragem deve ser menor ou igual a 5 L',
+        'tipo.required' => 'O campo tipo é obrigatório.',
+        'tipo.in' => 'O tipo selecionado não existe',
+        'quantidade.min' => 'O campo quantidade deve ser pelo menos 0',
+        'valor_unitario.required' => 'O campo valor unitário é obrigatório.',
+        'valor_unitario.min' => 'O valor unitário deve ser pelo menos 0.',
+    ];
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -41,7 +57,7 @@ class RefrigeranteController extends Controller
             'tipo' => 'required|in:Pet,Garrafa,Lata',
             'quantidade' => 'min:0',
             'valor_unitario' => 'required|min:0',
-        ]);
+        ], $this->messages);
 
         if ($validador->fails()) {
             return $this->retornarErrosDoValidador($validador);
@@ -96,7 +112,7 @@ class RefrigeranteController extends Controller
             'tipo' => 'in:Pet,Garrafa,Lata',
             'quantidade' => 'min:0',
             'valor_unitario' => 'min:0',
-        ]);
+        ], $this->messages);
 
         if ($validador->fails()) {
             return $this->retornarErrosDoValidador($validador);
