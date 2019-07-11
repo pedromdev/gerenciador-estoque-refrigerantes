@@ -40,7 +40,17 @@ class RefrigeranteController extends Controller
      */
     public function index()
     {
-        //
+        $matrizRefrigerantes = [];
+        $user = auth()->user();
+
+        foreach ($user->marcas as $marca) {
+            $matrizRefrigerantes[] = $marca->refrigerantes;
+        }
+
+        $refrigerantes = array_reduce($matrizRefrigerantes, function($array, $refrigerantes) {
+            return array_merge($array, $refrigerantes->toArray());
+        }, []);
+        return response()->json($refrigerantes);
     }
 
     /**
@@ -129,7 +139,13 @@ class RefrigeranteController extends Controller
             return $this->retornarErrosDoValidador($validador);
         }
         $dados = $this->removerValoresVazios(request(['marca_id', 'litragem', 'tipo', 'quantidade', 'valor_unitario']));
+        $marcaId = $refrigerante->marca->id;
         $resposta = $this->atualizarDados($dados, $refrigerante, $mensagemErro);
+
+        if (isset($dados['marca_id']) && $marcaId !== $dados['marca_id']) {
+            $marca = Marca::find($dados['marca_id']);
+            $marca->refrigerantes()->save($refrigerante);
+        }
 
         if ($resposta) return $resposta;
 
