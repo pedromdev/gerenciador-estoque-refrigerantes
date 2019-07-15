@@ -25,5 +25,8 @@ if [[ "$(stat -c "%U" "$APP_DIR/storage")" != "www-data" ]]; then
     chown www-data: -R "$APP_DIR/storage"
 fi
 
+cd $APP_DIR
+php artisan migrate
+
 docker-php-entrypoint $@
 
